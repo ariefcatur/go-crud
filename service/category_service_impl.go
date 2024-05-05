@@ -16,7 +16,7 @@ type CategoryServiceImpl struct {
 
 func (service *CategoryServiceImpl) Create(ctx context.Context, request web.CategoryCreateRequest) web.CategoryResponse {
 	tx, err := service.DB.Begin()
-	helper.PanicIfError()
+	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
 
 	category := domain.Category{
@@ -30,7 +30,7 @@ func (service *CategoryServiceImpl) Create(ctx context.Context, request web.Cate
 
 func (service *CategoryServiceImpl) Update(ctx context.Context, request web.CategoryUpdateRequest) web.CategoryResponse {
 	tx, err := service.DB.Begin()
-	helper.PanicIfError()
+	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
 
 	category, err := service.CategoryRepository.FindById(ctx, tx, request.Id)
@@ -45,7 +45,7 @@ func (service *CategoryServiceImpl) Update(ctx context.Context, request web.Cate
 
 func (service *CategoryServiceImpl) Delete(ctx context.Context, categoryId int) {
 	tx, err := service.DB.Begin()
-	helper.PanicIfError()
+	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
 
 	category, err := service.CategoryRepository.FindById(ctx, tx, categoryId)
@@ -56,7 +56,7 @@ func (service *CategoryServiceImpl) Delete(ctx context.Context, categoryId int) 
 
 func (service *CategoryServiceImpl) FindById(ctx context.Context, categoryId int) web.CategoryResponse {
 	tx, err := service.DB.Begin()
-	helper.PanicIfError()
+	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
 
 	category, err := service.CategoryRepository.FindById(ctx, tx, categoryId)
@@ -67,7 +67,7 @@ func (service *CategoryServiceImpl) FindById(ctx context.Context, categoryId int
 
 func (service *CategoryServiceImpl) FindByAll(ctx context.Context) []web.CategoryResponse {
 	tx, err := service.DB.Begin()
-	helper.PanicIfError()
+	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
 
 	categories := service.CategoryRepository.FindAll(ctx, tx)
