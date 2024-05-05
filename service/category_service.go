@@ -1,0 +1,14 @@
+package service
+
+import (
+	"context"
+	"mini-project/go-crud/model/web"
+)
+
+type CategoryService interface {
+	Create(ctx context.Context, request web.CategoryCreateRequest) web.CategoryResponse
+	Update(ctx context.Context, request web.CategoryCreateRequest) web.CategoryResponse
+	Delete(ctx context.Context, categoryId int)
+	FindById(ctx context.Context, categoryId int) web.CategoryResponse
+	FindByAll(ctx context.Context) []web.CategoryResponse
+}
