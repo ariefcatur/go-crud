@@ -2,11 +2,14 @@ package main
 
 import (
 	"github.com/go-playground/validator/v10"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/julienschmidt/httprouter"
 	"mini-project/go-crud/app"
 	"mini-project/go-crud/controller"
+	"mini-project/go-crud/helper"
 	"mini-project/go-crud/repository"
 	"mini-project/go-crud/service"
+	"net/http"
 )
 
 func main() {
@@ -24,4 +27,12 @@ func main() {
 	router.POST("/api/categories", categoryController.Create)
 	router.PUT("/api/categories/:categoryId", categoryController.Update)
 	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
+
+	server := http.Server{
+		Addr:    "localhost:3000",
+		Handler: router,
+	}
+
+	err := server.ListenAndServe()
+	helper.PanicIfError(err)
 }
