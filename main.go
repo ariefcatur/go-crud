@@ -8,6 +8,7 @@ import (
 	"mini-project/go-crud/controller"
 	"mini-project/go-crud/exception"
 	"mini-project/go-crud/helper"
+	"mini-project/go-crud/middleware"
 	"mini-project/go-crud/repository"
 	"mini-project/go-crud/service"
 	"net/http"
@@ -33,7 +34,7 @@ func main() {
 
 	server := http.Server{
 		Addr:    "localhost:3000",
-		Handler: router,
+		Handler: middleware.NewAuthMiddleware(router),
 	}
 
 	err := server.ListenAndServe()
