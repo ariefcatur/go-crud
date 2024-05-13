@@ -6,6 +6,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"mini-project/go-crud/app"
 	"mini-project/go-crud/controller"
+	"mini-project/go-crud/exception"
 	"mini-project/go-crud/helper"
 	"mini-project/go-crud/repository"
 	"mini-project/go-crud/service"
@@ -27,6 +28,8 @@ func main() {
 	router.POST("/api/categories", categoryController.Create)
 	router.PUT("/api/categories/:categoryId", categoryController.Update)
 	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
+
+	router.PanicHandler = exception.ErrorHandler
 
 	server := http.Server{
 		Addr:    "localhost:3000",
